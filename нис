@@ -29,34 +29,23 @@ x = np.asfarray ([[
  0,0,1,0,0,
  0,0,1,0,0]])
 
-?  Создание и обучение сети встречного распространения
-?  MyLVQ = nl.net.newlvq(nl.tool.minmax(x), 4, [.6, .4])
-?  error = MyLVQ.train(x, d, epochs=1000, goal=-1)
+minmax = [[0,1]]*25
+MyLVQ = nl.net.newlvq(minmax, n, [1])
 
-?  Опрос обученной сети
-        m = 31 * 31
-        xtest = np.zeros(m * 2)
-        xtest = xtest.reshape(m, 2)
-        i = 0
-        k0 = -3.
-        while k0 < 3.2:
-          k1 = -3.
-          while k1 < 3.2:
-           xtest[i, 0] = k0
-           xtest[i, 1] = k1
-           i += 1
-           k1 += 0.2
-         k0 += 0.2
-        y = MyLVQ.sim(xtest) 
-        
-        
-?   Визуализация результатов
-      gr1 = xtest[y[:, 0]>0]
-      gr2 = xtest[y[:, 1]>0]
-      pl.plot(gr1[:,0], gr1[:,1], 'r+', gr2[:,0], gr2[:,1], 'g+')
-      pl.axis([-3.2, 3.2, -3, 3])
-      pl.legend(['class 1', 'class 2', 'detected class 1', 'detected class 2'])
-      pl.show() 
+for i in range(n):
+    x[i] = x[i] / Norma(x[i])
+print(x)
+MyLVQ.layers[0].np['w'] = x
+
+xtest = np.array([
+              1, 1, 1, 1, 1,
+              1, 0, 0, 0, 1,
+              1, 0, 0, 0, 1,
+              1, 0, 0, 0, 1,
+              1, 1, 1, 1, 1])
+y = MyLVQ.sim(xtest)
+print (xtest)
+print (y)
 
         
         
