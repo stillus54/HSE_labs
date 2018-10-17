@@ -1,0 +1,1 @@
+D:\ANACONDA\Scripts\jupyter-notebook.exe
